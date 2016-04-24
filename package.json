@@ -11,6 +11,7 @@
   "homepage": "https://github.com/aam229/universal-redux-plugins/univeral-redux-plugin-express",
   "main": "lib/index.js",
   "scripts": {
+    "postinstall": "npm run compile",
     "compile": "babel --presets es2015,stage-0 --plugins transform-runtime src/ --out-dir lib/",
     "lint": "eslint -c .eslintrc src bin config",
     "prepublish": "npm run compile"
