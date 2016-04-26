@@ -1,17 +1,15 @@
 import path from 'path';
 import Express from 'express';
 import favicon from 'serve-favicon';
+import cookieParser from 'cookie-parser';
 import compression from 'compression';
 
 import { hooks, environments, positions, register } from 'universal-redux/lib/hooks';
 
-export const config = {
-  environments: environments.SERVER
-};
-
 register(hooks.CREATE_SERVER, ({ config, renderer }) => {
   const server = new Express();
   server.use(compression());
+  server.use(cookieParser());
 
   if (config.favicon) {
     server.use(favicon(path.resolve(config.favicon)));
@@ -19,7 +17,7 @@ register(hooks.CREATE_SERVER, ({ config, renderer }) => {
   const maxAge = config.maxAge || 0;
   server.use(Express.static(path.resolve(config.staticPath), { maxage: maxAge }));
   server.use((req, res) => {
-    renderer({ location: req.originalUrl, headers: req.headers })
+    renderer({ location: req.originalUrl, headers: req.headers, cookies: req.cookies })
       .then(({ status, body, redirect }) => {
         if(redirect){
           res.redirect(redirect);
