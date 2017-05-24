@@ -4,7 +4,7 @@ import favicon from 'serve-favicon';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 
-import { hooks, environments, positions, register } from 'universal-redux/lib/hooks';
+import { hooks, environments, positions, register } from 'universal-redux';
 
 register(hooks.CREATE_SERVER, ({ config, renderer }) => {
   const server = new Express();
